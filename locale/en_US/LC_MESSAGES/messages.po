@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Gscheid\n"
+"POT-Creation-Date: 2026-02-13 18:29+0100\n"
+"PO-Revision-Date: 2026-02-13 18:29+0100\n"
+"Last-Translator: \n"
+"Language-Team: Simon Eller\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-SearchPath-0: index.php\n"
+
+#: index.php:150
+msgid "You are logged in."
+msgstr "You are logged in."
+
+#: index.php:154
+msgid "Login failed. Invalid username or password."
+msgstr "Login failed. Invalid username or password."
+
+#: index.php:158 index.php:227
+msgid "password_hash not supported, Upgrade PHP version"
+msgstr "password_hash not supported, Upgrade PHP version"
+
+#: index.php:166 index.php:179
+msgid "Login"
+msgstr "Login"
+
+#: index.php:170
+msgid "Username"
+msgstr "Username"
+
+#: index.php:174
+msgid "Password"
+msgstr "Password"
+
+#: index.php:223
+msgid "Invalid or missing API key."
+msgstr "Invalid or missing API key."
+
+#: index.php:307
+msgid "Quote added successfully."
+msgstr "Quote added successfully."
+
+#: index.php:317
+msgid "Add new quote"
+msgstr "Add new quote"
+
+#: index.php:323
+msgid "Quote"
+msgstr "Quote"
+
+#: index.php:328
+msgid "Author"
+msgstr "Author"
+
+#: index.php:334
+msgid "Categories"
+msgstr "Categories"
+
+#: index.php:335
+#| msgid "Psychology, Film, Sports"
+msgid "Psychology,Film,Sports"
+msgstr "Psychology,Film,Sports"
+
+#: index.php:337
+msgid "Separate multiple categories with commas"
+msgstr "Separate multiple categories with commas"
+
+#: index.php:341
+msgid "Date"
+msgstr "Date"
+
+#: index.php:348
+msgid "Add Quote"
+msgstr "Add Quote"
+
+#: index.php:353
+msgid "All Quotes"
+msgstr "All Quotes"
+
+#: index.php:375
+msgid "No quotes found. Add your first one above!"
+msgstr "No quotes found. Add your first one above!"
+
+#: index.php:381
+msgid "Unknown Author"
+msgstr "Unknown Author"
+
+#: index.php:546
+msgid "Toggle navigation"
+msgstr "Toggle navigation"
+
+#: index.php:559
+msgid "German"
+msgstr "German"
+
+#: index.php:560
+msgid "English"
+msgstr "English"
+
+#: index.php:565
+msgid "Logout"
+msgstr "Logout"
+
+#: index.php:586
+msgid "Made with"
+msgstr "Made with"
+
+#: index.php:588
+msgid "by"
+msgstr "by"

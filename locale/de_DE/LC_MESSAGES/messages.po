@@ -1,0 +1,116 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Gscheid\n"
+"POT-Creation-Date: 2026-02-13 18:28+0100\n"
+"PO-Revision-Date: 2026-02-13 18:28+0100\n"
+"Last-Translator: \n"
+"Language-Team: Simon Eller\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-SearchPath-0: index.php\n"
+
+#: index.php:150
+msgid "You are logged in."
+msgstr "Du bist angemeldet."
+
+#: index.php:154
+msgid "Login failed. Invalid username or password."
+msgstr "Anmeldung fehlgeschlagen. Benutzername oder Passwort falsch."
+
+#: index.php:158 index.php:227
+msgid "password_hash not supported, Upgrade PHP version"
+msgstr ""
+"password_hash wird nicht unterstützt, aktualisiere PHP auf eine höhere "
+"Version"
+
+#: index.php:166 index.php:179
+msgid "Login"
+msgstr "Anmeldung"
+
+#: index.php:170
+msgid "Username"
+msgstr "Benutzername"
+
+#: index.php:174
+msgid "Password"
+msgstr "Passwort"
+
+#: index.php:223
+msgid "Invalid or missing API key."
+msgstr "Ungültiger oder fehlender API Schlüssel."
+
+#: index.php:307
+msgid "Quote added successfully."
+msgstr "Zitat erfolgreich hinzugefügt."
+
+#: index.php:317
+msgid "Add new quote"
+msgstr "Neues Zitat hinzufügen"
+
+#: index.php:323
+msgid "Quote"
+msgstr "Zitat"
+
+#: index.php:328
+msgid "Author"
+msgstr "Autor"
+
+#: index.php:334
+msgid "Categories"
+msgstr "Kategorien"
+
+#: index.php:335
+msgid "Psychology,Film,Sports"
+msgstr "Psychologie,Film,Sport"
+
+#: index.php:337
+msgid "Separate multiple categories with commas"
+msgstr "Trenne mehrere Kategorien mit einem Leerzeichen"
+
+#: index.php:341
+msgid "Date"
+msgstr "Datum"
+
+#: index.php:348
+msgid "Add Quote"
+msgstr "Zitat hinzufügen"
+
+#: index.php:353
+msgid "All Quotes"
+msgstr "Alle Zitate"
+
+#: index.php:375
+msgid "No quotes found. Add your first one above!"
+msgstr "Keine Zitate gefunden. Füge oben dein erstes hinzu!"
+
+#: index.php:381
+msgid "Unknown Author"
+msgstr "Unbekannter Autor"
+
+#: index.php:546
+msgid "Toggle navigation"
+msgstr "Navigation umschalten"
+
+#: index.php:559
+msgid "German"
+msgstr "Deutsch"
+
+#: index.php:560
+msgid "English"
+msgstr "Englisch"
+
+#: index.php:565
+msgid "Logout"
+msgstr "Abmelden"
+
+#: index.php:586
+msgid "Made with"
+msgstr "Made with"
+
+#: index.php:588
+msgid "by"
+msgstr "by"
