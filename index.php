@@ -5,7 +5,7 @@
  * A lightweight selfhostable webapp to store quotes in a database
  * and access them via API.
  *
- * @version v1.0.0
+ * @version v1.0.1
  * @author Simon Eller
  * @license https://github.com/simon-eller/gscheid/blob/main/LICENSE
  * @link https://github.com/simon-eller/gscheid
@@ -215,12 +215,14 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["random_quote"])) {
             $quote = $stmt->fetch();
 
             if ($quote) {
-                echo json_encode($quote);
+                header("Content-Type: application/json; charset=utf-8");
+                echo json_encode($quote, JSON_UNESCAPED_UNICODE);
                 exit;
             }
         } else {
             http_response_code(401);
-            echo json_encode(["error" => gettext("Invalid or missing API key.")]);
+            header("Content-Type: application/json; charset=utf-8");
+            echo json_encode(["error" => gettext("Invalid or missing API key.")], JSON_UNESCAPED_UNICODE);
             exit;
         }
     } else {
@@ -234,7 +236,8 @@ if (isset($_SESSION[SESSION_ID]["logged"], $auth_users[$_SESSION[SESSION_ID]["lo
     $stmt->execute(["%" . $_GET["search_author"] . "%"]);
 
     // Return contents of column name as JSON
-    echo json_encode($stmt->fetchAll(PDO::FETCH_COLUMN));
+    header("Content-Type: application/json; charset=utf-8");
+    echo json_encode($stmt->fetchAll(PDO::FETCH_COLUMN), JSON_UNESCAPED_UNICODE);
     exit;
 }
 
@@ -244,7 +247,8 @@ if (isset($_SESSION[SESSION_ID]["logged"], $auth_users[$_SESSION[SESSION_ID]["lo
     $stmt->execute(["%" . $_GET["search_category"] . "%"]);
 
     // Return contents of column category as JSON
-    echo json_encode($stmt->fetchAll(PDO::FETCH_COLUMN));
+    header("Content-Type: application/json; charset=utf-8");
+    echo json_encode($stmt->fetchAll(PDO::FETCH_COLUMN), JSON_UNESCAPED_UNICODE);
     exit;
 }
 
