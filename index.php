@@ -5,7 +5,7 @@
  * A lightweight selfhostable webapp to store quotes in a database
  * and access them via API.
  *
- * @version v1.0.1
+ * @version v1.0.2
  * @author Simon Eller
  * @license https://github.com/simon-eller/gscheid/blob/main/LICENSE
  * @link https://github.com/simon-eller/gscheid
@@ -138,6 +138,45 @@ if (isset($_GET["logout"])) {
     header("Location: " . $_SERVER["PHP_SELF"], true, 302);
 }
 
+// Return random quote
+if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["random_quote"])) {
+
+    if (function_exists("password_verify")) {
+        if (isset($_GET["api_key"]) && password_verify($_GET["api_key"], $api_key)) {
+            $stmt = $pdo->prepare("
+                SELECT
+                    q.id,
+                    q.quote,
+                    q.date,
+                    a.name AS author,
+                    GROUP_CONCAT(c.category, ', ') AS categories
+                FROM quotes q
+                LEFT JOIN authors a ON q.author_id = a.id
+                LEFT JOIN quotes_categories qc ON q.id = qc.quote_id
+                LEFT JOIN categories c ON qc.category_id = c.id
+                GROUP BY q.id
+                ORDER BY RANDOM()
+                LIMIT 1
+            ");
+            $stmt->execute();
+            $quote = $stmt->fetch();
+
+            if ($quote) {
+                header("Content-Type: application/json; charset=utf-8");
+                echo json_encode($quote, JSON_UNESCAPED_UNICODE);
+                exit;
+            }
+        } else {
+            http_response_code(401);
+            header("Content-Type: application/json; charset=utf-8");
+            echo json_encode(["error" => gettext("Invalid or missing API key.")], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+    } else {
+        set_msg(gettext("password_hash not supported, Upgrade PHP version"), "danger");
+    }
+}
+
 // Check if the user is logged in or not. If not, it will show the login form.
 if (isset($_SESSION[SESSION_ID]["logged"], $auth_users[$_SESSION[SESSION_ID]["logged"]])) {
     // Logged in
@@ -190,45 +229,6 @@ if (isset($_SESSION[SESSION_ID]["logged"], $auth_users[$_SESSION[SESSION_ID]["lo
 }
 
 /*************************** ACTIONS ***************************/
-
-// Return random quote
-if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["random_quote"])) {
-
-    if (function_exists("password_verify")) {
-        if (isset($_GET["api_key"]) && password_verify($_GET["api_key"], $api_key)) {
-            $stmt = $pdo->prepare("
-                SELECT
-                    q.id,
-                    q.quote,
-                    q.date,
-                    a.name AS author,
-                    GROUP_CONCAT(c.category, ', ') AS categories
-                FROM quotes q
-                LEFT JOIN authors a ON q.author_id = a.id
-                LEFT JOIN quotes_categories qc ON q.id = qc.quote_id
-                LEFT JOIN categories c ON qc.category_id = c.id
-                GROUP BY q.id
-                ORDER BY RANDOM()
-                LIMIT 1
-            ");
-            $stmt->execute();
-            $quote = $stmt->fetch();
-
-            if ($quote) {
-                header("Content-Type: application/json; charset=utf-8");
-                echo json_encode($quote, JSON_UNESCAPED_UNICODE);
-                exit;
-            }
-        } else {
-            http_response_code(401);
-            header("Content-Type: application/json; charset=utf-8");
-            echo json_encode(["error" => gettext("Invalid or missing API key.")], JSON_UNESCAPED_UNICODE);
-            exit;
-        }
-    } else {
-        set_msg(gettext("password_hash not supported, Upgrade PHP version"), "danger");
-    }
-}
 
 // Handle AJAX requests for auto-completing authors
 if (isset($_SESSION[SESSION_ID]["logged"], $auth_users[$_SESSION[SESSION_ID]["logged"]]) && $_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["search_author"])) {
