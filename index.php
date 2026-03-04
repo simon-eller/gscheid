@@ -5,7 +5,7 @@
  * A lightweight selfhostable webapp to store quotes in a database
  * and access them via API.
  *
- * @version v1.0.2
+ * @version v1.1.0
  * @author Simon Eller
  * @license https://github.com/simon-eller/gscheid/blob/main/LICENSE
  * @link https://github.com/simon-eller/gscheid
@@ -143,22 +143,59 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["random_quote"])) {
 
     if (function_exists("password_verify")) {
         if (isset($_GET["api_key"]) && password_verify($_GET["api_key"], $api_key)) {
-            $stmt = $pdo->prepare("
-                SELECT
-                    q.id,
-                    q.quote,
-                    q.date,
-                    a.name AS author,
-                    GROUP_CONCAT(c.category, ', ') AS categories
-                FROM quotes q
-                LEFT JOIN authors a ON q.author_id = a.id
-                LEFT JOIN quotes_categories qc ON q.id = qc.quote_id
-                LEFT JOIN categories c ON qc.category_id = c.id
-                GROUP BY q.id
-                ORDER BY RANDOM()
-                LIMIT 1
-            ");
-            $stmt->execute();
+
+            // If optional category value is given
+            if (isset($_GET["category"])){
+                $category_name = trim($_GET["category"] ?? '');
+
+                // Check if matching entry of category exists in database
+                $stmt = $pdo->prepare("SELECT id FROM categories WHERE category = ?");
+                $stmt->execute([$category_name]);
+                $category_id = $stmt->fetchColumn();
+
+                if ($category_id) {
+                    $stmt = $pdo->prepare("
+                        SELECT
+                            q.id,
+                            q.quote,
+                            q.date,
+                            a.name AS author,
+                            GROUP_CONCAT(c.category, ', ') AS categories
+                        FROM quotes q
+                        LEFT JOIN authors a ON q.author_id = a.id
+                        LEFT JOIN quotes_categories qc ON q.id = qc.quote_id
+                        LEFT JOIN categories c ON qc.category_id = c.id
+                        WHERE c.id = ?
+                        GROUP BY q.id
+                        ORDER BY RANDOM()
+                        LIMIT 1
+                    ");
+                    $stmt->execute([$category_id]);
+                } else{
+                    http_response_code(404);
+                    header("Content-Type: application/json; charset=utf-8");
+                    echo json_encode(["error" => gettext("No entry found with the specified category.")], JSON_UNESCAPED_UNICODE);
+                    exit;
+                }
+            } else{
+                $stmt = $pdo->prepare("
+                    SELECT
+                        q.id,
+                        q.quote,
+                        q.date,
+                        a.name AS author,
+                        GROUP_CONCAT(c.category, ', ') AS categories
+                    FROM quotes q
+                    LEFT JOIN authors a ON q.author_id = a.id
+                    LEFT JOIN quotes_categories qc ON q.id = qc.quote_id
+                    LEFT JOIN categories c ON qc.category_id = c.id
+                    GROUP BY q.id
+                    ORDER BY RANDOM()
+                    LIMIT 1
+                ");
+                $stmt->execute();
+            }
+
             $quote = $stmt->fetch();
 
             if ($quote) {
